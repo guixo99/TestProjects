@@ -1,0 +1,57 @@
+Generar un proyecto de angular con yo
+
+npm install --save-dev load-grunt-tasks grunt-babel grunt-karma babel-preset-es2015 grunt-browserify babelify
+
+
+create .babelrc or package.json
+{
+  "presets": ["es2015"]
+}
+
+Add to Gruntfile
+
+"babel": {
+	options: {
+		sourceMap: true
+	},
+	dist: {
+		files: {
+			"dist/app.js": "src/app.js"
+		}
+	}
+}
+
+crearte src
+
+add to appConfig -> src: 'src'
+
+babel: {
+  options: {
+    sourceMap: true,
+    presets: ['es2015']
+  },
+  dist: {
+    files: [{
+      "expand": true,
+      "cwd": "src/",
+      "src": ["**/*.js"],
+      "dest": "app/scripts/",
+    }]
+  }
+}
+
+browserify: {
+      dist: {
+        options: {
+          browserifyOptions: {
+            debug: true
+          },
+          transform: [
+            [ 'babelify', { sourceMapsAbsolute: true, presets: ['es2015'] } ]
+          ]
+        },
+        files: {
+          'app/scripts/module.js': ['src/app.js']
+        }
+      }
+    },
